@@ -1,0 +1,158 @@
+---
+title: "Data Visualization Final Project: Diamond Attributes and Pricing"
+author: "Sipra Mishra"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# Enforcing clean rendering rules for peer review
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.width = 8, fig.height = 5)
+
+# Loading required packages
+library(ggplot2)
+library(plotly)
+library(dplyr)
+```
+
+
+## Introduction
+
+This report explores the diamonds dataset from the ggplot2 package. It contains data on 53,940 diamonds, detailing their physical dimensions, quality metrics (the 4 Cs: Carat, Cut, Color, Clarity), and price. The analysis below satisfies the requirement of presenting eight polished, distinct graphics across multiple figure types to deliver rich data insights.
+
+
+## Figure Type 1: Distribution Analyses
+
+## Figure 1: Distribution of Diamond Prices
+This histogram visualizes the distribution of diamond prices across the entire dataset, utilizing a log-transformed scale to account for severe right-skewness.
+
+```{r}
+ggplot(diamonds, aes(x = price)) +
+  geom_histogram(bins = 50, fill = "steelblue", color = "white") +
+  scale_x_log10(labels = scales::dollar_format()) +
+  labs(title = "Figure 1: Log-Transformed Distribution of Diamond Prices",
+       x = "Price (USD, Log Scale)",
+       y = "Frequency Count") +
+  theme_minimal() 
+```
+
+## Figure 2: Carat Weight Distribution
+Understanding how carat weight is distributed helps contextualize pricing clusters.
+
+```{r}
+ggplot(diamonds, aes(x = carat)) +
+  geom_histogram(binwidth = 0.05, fill = "#005A5B", color = "white") +
+  xlim(0, 3) +
+  labs(title = "Figure 2: Distribution of Diamond Carat Weights (0 to 3 Carats)",
+       x = "Carat Weight",
+       y = "Frequency Count") +
+  theme_light()
+```
+
+## Figure 3: Price Variance Across Diamond Cuts
+This box plot displays the distribution of prices across different quality cuts, highlighting the median and outlier ranges.
+
+```{r}
+ggplot(diamonds, aes(x = cut, y = price, fill = cut)) +
+  geom_boxplot(outlier.alpha = 0.1) +
+  scale_y_log10(labels = scales::dollar_format()) +
+  scale_fill_brewer(palette = "Purple-Blue") +
+  labs(title = "Figure 3: Diamond Price Distribution Across Cut Qualities",
+       x = "Quality of the Cut",
+       y = "Price (USD, Log Scale)",
+       fill = "Cut Grade") +
+  theme_minimal()
+```
+
+
+## Figure Type 2: Relationships & Trends
+
+## Figure 4: Carat Weight vs. Price
+This scatter plot maps out the primary driver of diamond valuation: the relationship between carat size and market price.
+
+```{r}
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point(alpha = 0.2, color = "midnightblue", size = 0.8) +
+  geom_smooth(method = "gam", color = "darkred", size = 1) +
+  scale_y_continuous(labels = scales::dollar_format()) +
+  labs(title = "Figure 4: Non-linear Relationship Between Carat and Price",
+       x = "Carat Weight",
+       y = "Price (USD)") +
+  theme_minimal()
+```
+
+## Figure 5: Depth vs. Table Percentage by Cut Quality
+A deeper look into how the geometric proportions (depth % vs. table %) relate to one another based on cut categories.
+
+```{r}
+ggplot(diamonds, aes(x = depth, y = table, color = cut)) +
+  geom_point(alpha = 0.4, size = 1) +
+  xlim(55, 70) +
+  ylim(50, 70) +
+  scale_color_brewer(palette = "Set1") +
+  labs(title = "Figure 5: Geometric Attribute Dimensions (Depth vs. Table)",
+       x = "Total Depth Percentage",
+       y = "Table Percentage (Width of Top)",
+       color = "Cut Quality") +
+  theme_light()
+```
+
+## Figure Type 3: Comparisons
+
+## Figure 6: Average Price by Color Grade
+Using a calculated summary dataset, this bar chart compares the mean market price across different diamond color grades (D is colorless, J is noticeable color).
+
+```{r} 
+color_summary <- diamonds %>%
+  group_by(color) %>%
+  summarise(mean_price = mean(price))
+
+ggplot(color_summary, aes(x = color, y = mean_price, fill = color)) +
+  geom_bar(stat = "identity", color = "black", width = 0.7) +
+  scale_fill_viridis_d(option = "plasma") +
+  scale_y_continuous(labels = scales::dollar_format()) +
+  labs(title = "Figure 6: Comparing Average Diamond Price by Color Grade",
+       x = "Color Grade",
+       y = "Mean Price (USD)") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+```
+
+
+## Figure 7: Diamond Count Profiles by Clarity Range
+This visualization contrasts the absolute inventory availability of diamonds segmented by clarity scales.
+
+```{r}
+ggplot(diamonds, aes(x = clarity, fill = clarity)) +
+  geom_bar() +
+  scale_fill_brewer(palette = "Spectral") +
+  labs(title = "Figure 7: Dataset Composition Across Clarity Metrics",
+       x = "Clarity Grade",
+       y = "Total Sample Count") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+
+## Interactive Visualization
+
+## Figure 8: Interactive Analysis of Carat, Price, and Clarity
+To meet the core interactive submission criteria, this scatter plot utilizes a smaller random sample subset of 1,000 diamonds for fluid interface performance, rendered directly via plotly. Hover over data points to review precise individual metrics.
+
+```{r} 
+set.seed(42)
+sampled_diamonds <- diamonds %>% sample_n(1000)
+
+p <- ggplot(sampled_diamonds, aes(x = carat, y = price, color = clarity, text = paste("Cut:", cut))) +
+  geom_point(alpha = 0.7) +
+  scale_y_continuous(labels = scales::dollar_format()) +
+  labs(title = "Figure 8: Interactive Scatter Map of Size vs. Valuation",
+       x = "Carat Weight",
+       y = "Price (USD)",
+       color = "Clarity") +
+  theme_minimal()
+```
+```{r}
+ggplotly(p, tooltip = c("x", "y", "color", "text"))
+```
