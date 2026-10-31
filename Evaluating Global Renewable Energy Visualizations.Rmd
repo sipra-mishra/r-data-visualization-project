@@ -1,0 +1,30 @@
+---
+title: "Evaluating Global Renewable Energy Visualizations"
+author: "Sipra Mishra"
+output: html_document
+---
+<style>
+h2 {
+    color: #0056b3; /* This changes all ## headers to a professional blue */
+}
+</style>
+
+## Visualization Link
+
+
+[Our World in Data - Renewable Energy](https://ourworldindata.org/grapher/share-electricity-renewables)
+
+Data Source Context: 
+The underlying dataset comes directly from the Ember Global Electricity Review and the Energy Institute Statistical Review of World Energy. It tracks the percentage of electricity generated from renewable sources (solar, wind, hydro, biomass) globally.
+
+## Weakness
+
+A significant weakness of this interactive map visualization is its reliance on broad, static percentage bins for its color scale (e.g., grouping everything from 10% to 20% into a single shade of green). Because countries with vastly different infrastructure realities are lumped into the same color category, it obscures subtle but critical year-over-year progress. For example, a country that increases its renewable generation from 11% to 19% shows absolutely no visual shift on the map, masking meaningful policy achievements.
+
+To improve this and make it more impactful, the designer could transition to a continuous, sequential color gradient scale combined with an explicit regional trend sidebar. Adding a small line-chart pop-up upon hovering over a country would allow readers to instantly observe the underlying annual momentum without losing the global geographic context.
+
+## Strength
+
+A major strength of this visualization is the integration of a dynamic, interactive time-slider directly beneath the global map, spanning from 1990 to the present day. Many environmental visualizations only show a static snapshot of the current year, which fails to communicate acceleration. By allowing users to hit 'Play' or drag the slider across decades, the designer transforms static geographic data into an unfolding historical narrative.
+
+This design choice makes the broader story immediately clear: it visually demonstrates the rapid geographic expansion of green energy infrastructure over time, turning abstract climate statistics into an intuitive, highly visible global transition that a reader can grasp in seconds.
