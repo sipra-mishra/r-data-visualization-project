@@ -1,0 +1,42 @@
+---
+title: "Project Proposal : A Data-Driven Exploration of World Bank Economic Indicators"
+author: "Sipra Mishra"
+output: html_document
+---
+## Project Topic :
+
+The subject of my project is a global analysis of economic development trajectories—specifically tracking how national wealth (GDP in USD) changes over time across different global regions. I am going to build a series of data-driven visualizations to compare the growth rates of emerging economies against historically developed nations and pinpoint periods of global economic shifts.
+
+
+## Data Sources :
+
+I am using exactly one centralized, pre-approved data source for this project:
+The World Bank National Accounts Data:
+URL: https://data.worldbank.org
+
+Citation: World Bank Group (2026). "World Development Indicators: Gross Domestic Product."
+Because all tracking metrics are contained within this single source repository, no complex cross-platform data merging is required.
+
+
+## Description of the Data :
+
+Timespan: The data tracks annual GDP records consecutively from 1960 to 2023.
+Geographical Location: Global scope, containing explicit rows for over 200 individual nations alongside region-wide macro aggregates (e.g., East Asia & Pacific, South Asia, European Union).
+
+Characteristics/Variables Captured: The database tracks highly structured columns: Country Name, Country Code, Year, and Value (representing total GDP in current USD).
+
+Dataset Shape & Structure: The dataset is perfectly rectangular. It consists of roughly 12,000 rows (individual country-year combinations) and a clean 4-column layout, making it incredibly simple to read, filter, and analyze in R.
+
+
+## Ideas about the figures that you will create to visualize this data :
+
+To easily meet the requirement of eight figures across three distinct chart types, I will build:
+
+## 1)Line Plots (Type 1): 
+A time-series line graph tracking the steady rise of GDP from 1960 to 2023, featuring separate color-coded lines for major regions (like South Asia, North America, and Europe) to compare structural economic growth.
+
+## 2)Bar Charts (Type 2): 
+A ranked horizontal bar chart displaying the top 10 nations with the largest single-year economic contractions during global recession periods (e.g., 2008 or 2020).
+
+## 3)Box Plots (Type 3): 
+A series of annual distribution box plots grouping countries by continent to show the global wealth gap spread and track how economic variance changes over the decades.
